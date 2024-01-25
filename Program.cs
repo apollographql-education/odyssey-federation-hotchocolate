@@ -11,6 +11,7 @@ builder
     .AddApolloFederationV2()
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
+    .AddType<Recipe>()
     .RegisterService<SpotifyService>();
 ;
 
