@@ -1,14 +1,15 @@
-﻿using ApolloGraphQL.HotChocolate.Federation;
+using HotChocolate.ApolloFederation.Resolvers;
+using HotChocolate.ApolloFederation.Types;
 using SpotifyWeb;
 
 namespace Odyssey.MusicMatcher;
 
 [GraphQLDescription("A curated collection of tracks designed for a specific activity or mood.")]
-[Key("id")]
 public class Playlist
 {
     [GraphQLDescription("The ID for the playlist.")]
     [ID]
+    [Key]
     public string Id { get; }
 
     [GraphQLDescription("The name of the playlist.")]
