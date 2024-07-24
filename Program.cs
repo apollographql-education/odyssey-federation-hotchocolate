@@ -8,8 +8,10 @@ builder.Services.AddHttpClient<SpotifyService>();
 builder
     .Services
     .AddGraphQLServer()
+    .AddApolloFederation()
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
+    .AddType<Recipe>()
     .RegisterService<SpotifyService>();
 ;
 
@@ -32,4 +34,4 @@ app.UseCors();
 
 app.MapGraphQL();
 
-app.Run();
+app.RunWithGraphQLCommands(args);
