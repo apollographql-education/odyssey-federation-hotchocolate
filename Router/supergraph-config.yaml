@@ -1,0 +1,9 @@
+federation_version: =2.5.0
+subgraphs:
+  soundtracks: # Subgraph running locally, using introspection to retrieve schema
+    schema:
+      subgraph_url: http://localhost:5059/graphql
+  recipes: # Schema downloaded from GraphOS registry
+    schema:
+      graphref: graph-id@current
+      subgraph: recipes
