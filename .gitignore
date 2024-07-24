@@ -7,3 +7,9 @@ __snapshots__/__mismatch__
 
 # generated schema
 schema.graphqls
+
+# router binary
+Router/router
+
+# env file
+.env
