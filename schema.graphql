@@ -1,4 +1,4 @@
-﻿schema @link(url: "https:\/\/specs.apollo.dev\/federation\/v2.5", import: [ "@key", "FieldSet" ]) {
+﻿schema @link(url: "https:\/\/specs.apollo.dev\/federation\/v2.5", import: [ "@requires", "@external", "@key", "FieldSet" ]) {
   query: Query
   mutation: Mutation
 }
@@ -40,6 +40,13 @@ type Query {
   _entities(representations: [_Any!]!): [_Entity]!
 }
 
+type Recipe @key(fields: "id") {
+  "A list of recommended playlists for this particular recipe. Returns 1 to 3 playlists."
+  recommendedPlaylists: [Playlist!]! @requires(fields: "name")
+  id: ID!
+  name: String @external
+}
+
 "A single audio file, usually a song."
 type Track {
   "The ID for the track."
@@ -60,7 +67,7 @@ type _Service {
 }
 
 "Union of all types that key directive applied. This information is needed by the Apollo federation gateway."
-union _Entity = Playlist
+union _Entity = Recipe | Playlist
 
 input AddItemsToPlaylistInput {
   "The ID of the playlist."
@@ -69,10 +76,16 @@ input AddItemsToPlaylistInput {
   uris: [String!]!
 }
 
+"Directive to indicate that a field is owned by another service, for example via Apollo federation."
+directive @external on FIELD_DEFINITION
+
 "Used to indicate a combination of fields that can be used to uniquely identify and fetch an object or interface."
 directive @key(fields: FieldSet! resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
 
 directive @link(url: String! import: [String!]) repeatable on SCHEMA
+
+"Used to annotate the required input fieldset from a base type for a resolver."
+directive @requires(fields: FieldSet!) on FIELD_DEFINITION
 
 "Scalar representing a set of fields."
 scalar FieldSet
